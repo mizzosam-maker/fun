@@ -1,5 +1,5 @@
 // app/page.tsx
-'use client';
+/*'use client';
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
@@ -166,7 +166,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#edf6f4] to-[#cfe0db]">
-      {/* Navigation */}
+      {/* Navigation *
       <nav className="bg-white/80 backdrop-blur-md sticky top-0 z-10 border-b border-[#cfe0db]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
@@ -200,9 +200,9 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Main Content */}
+      {/* Main Content *
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24">
-        {/* View Toggle */}
+        {/* View Toggle *
         <div className="flex justify-center gap-4 mb-8">
           <button
             onClick={() => setViewAll(true)}
@@ -292,7 +292,7 @@ export default function Home() {
         )}
       </main>
 
-      {/* Floating Buttons */}
+      {/* Floating Buttons *
       {userRole === 'admin' && (
       <Link
         href="/admin/metrics"
@@ -303,10 +303,10 @@ export default function Home() {
       </Link>
     )}
       <div className="fixed bottom-8 right-8 flex flex-col gap-4">
-        {/* Camera Button - ALL users */}
+        {/* Camera Button - ALL users *
         <CameraCapture userId={userId} onUploadSuccess={handleUploadSuccess} />
 
-        {/* Users Button - ALL users */}
+        {/* Users Button - ALL users *
         <Link
           href="/users"
           className="w-14 h-14 bg-gradient-to-r from-[#1f8d6f] to-[#0f6d54] rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
@@ -315,13 +315,13 @@ export default function Home() {
           <Users className="w-6 h-6 text-white" />
         </Link>
 
-        {/* Admin Gallery Upload - ONLY Admin */}
+        {/* Admin Gallery Upload - ONLY Admin *
         {userRole === 'admin' && (
           <AdminGalleryUpload userId={userId} onUploadSuccess={handleUploadSuccess} />
         )}
       </div>
 
-      {/* Delete Confirmation Modal */}
+      {/* Delete Confirmation Modal *
       {showDeleteConfirm && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-md w-full p-6 relative animate-in fade-in zoom-in duration-300">
@@ -944,3 +944,31 @@ export default function Home() {
     </div>
   );
 }*/
+
+
+"use client";
+
+export default function Home() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-6">
+      <div className="max-w-md w-full text-center">
+        
+        <h1 className="text-2xl font-semibold text-gray-800 mb-2">
+          Service Temporarily Unavailable
+        </h1>
+
+        <p className="text-gray-500 mb-6">
+          This service has been temporarily suspended.
+        </p>
+
+        {/*<button
+          onClick={() => window.location.reload()}
+          className="px-6 py-2 rounded-lg bg-blue-600 text-white"
+        >
+          Retry
+        </button>*/}
+
+      </div>
+    </div>
+  );
+}
