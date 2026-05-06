@@ -958,7 +958,7 @@ export default function Home() {
         </h1>
 
         <p className="text-gray-500 mb-6">
-          This service has been temporarily suspended.
+          This service has been suspended.
         </p>
 
         {/*<button

@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'FireUpNow - Share Your Moments',
-  description: 'Upload and share your beautiful moments',
+  title: '',
+  description: '',
 };
 
 export default function RootLayout({
