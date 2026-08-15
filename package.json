@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "seed": "ts-node --transpile-only scripts/seed.ts"
+    "seed": "ts-node --project tsconfig.seed.json --transpile-only scripts/seed.ts"
   },
   "dependencies": {
     "cloudinary": "^2.10.0",
