@@ -7,11 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "seed": "ts-node --project tsconfig.seed.json --transpile-only scripts/seed.ts"
+    "seed": "ts-node --project tsconfig.seed.json --transpile-only scripts/seed.ts",
+    "migrate-users.ts": "ts-node --project tsconfig.seed.json --transpile-only scripts/migrate-users.ts"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "cloudinary": "^2.10.0",
     "framer-motion": "^12.38.0",
+    "jsonwebtoken": "^9.0.3",
     "lucide-react": "^1.11.0",
     "mongoose": "^9.5.0",
     "next": "16.2.4",

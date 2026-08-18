@@ -1,112 +1,64 @@
-/*import { NextResponse } from 'next/server';
-import { connectToDatabase } from '@/app/lib/mongodb';
-import User from '@/app/models/User';
-
-export async function POST(request: Request) {
-  try {
-    await connectToDatabase();
-    const { code, pin } = await request.json();
-
-    const user = await User.findOne({ code, pin });
-
-    if (!user) {
-      return NextResponse.json(
-        { error: 'Invalid code or PIN' },
-        { status: 401 }
-      );
-    }
-
-    return NextResponse.json({
-      success: true,
-      userId: user._id,
-      code: user.code,
-    });
-  } catch (error) {
-    console.error('Login error:', error);
-    return NextResponse.json(
-      { error: 'Login failed' },
-      { status: 500 }
-    );
-  }
-}*/
-
-/*import { NextResponse } from 'next/server';
-import { connectToDatabase } from '@/app/lib/mongodb';
-import User from '@/app/models/User';
-
-export async function POST(request: Request) {
-  try {
-    await connectToDatabase();
-    const { name, pin } = await request.json();
-
-    // Validate inputs
-    if (!name || !pin) {
-      return NextResponse.json(
-        { error: 'Username and PIN are required' },
-        { status: 400 }
-      );
-    }
-
-    // Find user by name and PIN
-    const user = await User.findOne({ name: name.trim(), pin });
-
-    if (!user) {
-      return NextResponse.json(
-        { error: 'Invalid username or PIN' },
-        { status: 401 }
-      );
-    }
-
-    return NextResponse.json({
-      success: true,
-      userId: user._id,
-      name: user.name,
-    });
-  } catch (error) {
-    console.error('Login error:', error);
-    return NextResponse.json(
-      { error: 'Login failed' },
-      { status: 500 }
-    );
-  }
-}*/
-
 // app/api/auth/login/route.ts
 import { NextResponse } from 'next/server';
 import { connectToDatabase } from '@/app/lib/mongodb';
 import User from '@/app/models/User';
+import { generateToken } from '@/app/lib/jwt';
 
 export async function POST(request: Request) {
   try {
-    await connectToDatabase();
-    const { name, pin } = await request.json();
+    const body = await request.json();
+    const { email, password } = body;
 
-    if (!name || !pin) {
+    if (!email || !password) {
       return NextResponse.json(
-        { error: 'Username and PIN are required' },
+        { error: 'Email and password are required' },
         { status: 400 }
       );
     }
 
-    const user = await User.findOne({ name: name.trim(), pin });
+    await connectToDatabase();
 
+    // Find user by email
+    const user = await User.findOne({ email });
     if (!user) {
       return NextResponse.json(
-        { error: 'Invalid username or PIN' },
+        { error: 'Invalid credentials' },
         { status: 401 }
       );
     }
 
+    // Check password
+    const isPasswordValid = await user.comparePassword(password);
+    if (!isPasswordValid) {
+      return NextResponse.json(
+        { error: 'Invalid credentials' },
+        { status: 401 }
+      );
+    }
+
+    // Generate JWT token
+    const token = generateToken({
+      userId: user.id,
+      username: user.username,
+      email: user.email,
+    });
+
+    // Remove password from response
+    const userResponse = user.toObject();
+    delete userResponse.password;
+
     return NextResponse.json({
       success: true,
-      userId: user._id,
-      name: user.name,
-      role: user.role,
+      data: {
+        user: userResponse,
+        token,
+      },
     });
+
   } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json(
-      { error: 'Login failed' },
+      { error: 'Failed to login' },
       { status: 500 }
     );
   }
